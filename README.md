@@ -1,21 +1,26 @@
 # Dataset-of-Gazebo-Worlds-Models-and-Maps
-- A set of Gazebo worlds models and maps that I use for testing Navigation2
-- These models are tested using Gazebo 9 and Gazebo 11.
+
+Forked and heavily modified to use the worlds with ROS for SLAM simulations.
+Initially the paths contained in the files were strange and hardcoded in a way that only allowed an execution using `gazebo` from the original folder.
+In order to untie the files the following operations have been performed: 
+
+1. first all the `models` folders have been gathered in a single one.
+The original ones are in the zip containing the world file too.
+For example, for `small_house.world` the files are in `Dataset-of-Gazebo-Worlds-Models-and-Maps/worlds/small_house/small_house.zip`. 
+Many of the worlds share the same models.
+
+2. all the instances of the keyword "file", that is used to source a file, have been replaced by "model", since the first one creates problems that have not been resolved yet. 
+the urgencies of actually concluding the project deprived me of any will to investigate further, therefore just know that it works now, but changing anything would probably break it, for unknown reasons.
+The commands used are `find . -type f -name "*.config" -print0 | xargs -0 sed -i 's!file://models/!file://!g'` and `find . -type f -name "*.sdf" -print0 | xargs -0 sed -i 's!file://models/!file://!g'` executed in the models fodler, once they have been gathered.
+
+3. once the file paths are set, the other preoccupation is changing the path to the photos contained in the DAE files. 
+assuming `models` and `photos` are on the same folder level, the path is changed by using `find . -type f -name "*.DAE" -print0 | xargs -0 sed -i 's!../../../../photos!../../../photos!g'`
+
 
 ## How to use the models
-1- Copy the model you want to use in .gazebo/models directory.
 
-or
 
-- Set Gazebo model path for the worlds with models directory
 
-2- Gazebo -> Insert -> <World_Model_Name>
-
-or
-
-- go to gazebo word directory and type `gazebo example.world`
-
-Most models come with maps.
 
 ### AWS Small House
  - `export GAZEBO_MODEL_PATH=/home/<user_name>/.gazebo/models/small_house/models/`
